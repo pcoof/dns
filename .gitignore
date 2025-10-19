@@ -8,3 +8,15 @@ wheels/
 
 # Virtual environments
 .venv
+
+# PyInstaller
+*.spec
+
+# Installer outputs
+Output/
+*.exe
+!icon.ico
+
+# Build tools
+nsis-setup.exe
+innosetup.exe

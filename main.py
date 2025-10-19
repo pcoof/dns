@@ -16,6 +16,7 @@ import socket
 from pathlib import Path
 import webbrowser
 
+
 # 应用程序常量
 class AppConfig:
     WINDOW_TITLE = "DNS服务器测试工具"
@@ -23,24 +24,60 @@ class AppConfig:
     CONFIG_FILE = "dns_servers.ini"
     FONT_FAMILY = "Microsoft YaHei"
 
-    # 主题选项 
-    THEMES = [ "Cyborg", "Darkly", "Superhero", "Vapor", "Solar", "Flatly", "Cosmo", "Journal", "Litera", "Lumen", "Minty", "Morph", "Pulse", "Sandstone", "Simplex", "Yeti", "United", ]
+    # 主题选项
+    THEMES = [
+        "Cyborg",
+        "Darkly",
+        "Superhero",
+        "Vapor",
+        "Solar",
+        "Flatly",
+        "Cosmo",
+        "Journal",
+        "Litera",
+        "Lumen",
+        "Minty",
+        "Morph",
+        "Pulse",
+        "Sandstone",
+        "Simplex",
+        "Yeti",
+        "United",
+    ]
     # 深色主题列表
     DARK_THEMES = {"cyborg", "darkly", "superhero", "vapor", "solar"}
 
     # 默认DNS服务器
     DEFAULT_IPV4_SERVERS = [
-        { "name": "US - Google Public DNS", "primary": "8.8.8.8", "secondary": "8.8.4.4", },
+        {
+            "name": "US - Google Public DNS",
+            "primary": "8.8.8.8",
+            "secondary": "8.8.4.4",
+        },
         {"name": "AU - Cloudflare", "primary": "1.1.1.1", "secondary": "1.0.0.1"},
-        { "name": "US - OpenDNS", "primary": "208.67.222.222", "secondary": "208.67.220.220", },
-        {"name": "CN - Aliyun", "primary": "223.5.5.5", "secondary": "223.6.6.6"}, { "name": "CN - 114DNS", "primary": "114.114.114.114", "secondary": "114.114.115.115", },
-        { "name": "CN - DNSPod", "primary": "119.29.29.29", "secondary": "182.254.116.116", },
+        {
+            "name": "US - OpenDNS",
+            "primary": "208.67.222.222",
+            "secondary": "208.67.220.220",
+        },
+        {"name": "CN - Aliyun", "primary": "223.5.5.5", "secondary": "223.6.6.6"},
+        {
+            "name": "CN - 114DNS",
+            "primary": "114.114.114.114",
+            "secondary": "114.114.115.115",
+        },
+        {
+            "name": "CN - DNSPod",
+            "primary": "119.29.29.29",
+            "secondary": "182.254.116.116",
+        },
     ]
 
     DEFAULT_IPV6_SERVERS = {
         "US - Google Public DNS": "2001:4860:4860::8888,2001:4860:4860::8844",
         "AU - Cloudflare": "2606:4700:4700::1111,2606:4700:4700::1001",
     }
+
 
 class DNSTesterApp:
     def __init__(self, root):
@@ -114,26 +151,42 @@ class DNSTesterApp:
 
     def _create_network_device_controls(self, parent):
         """创建网络设备控制组件"""
-        tb.Label(parent, text="网络设备:", font=(AppConfig.FONT_FAMILY, 10)).pack( side=tk.LEFT, padx=(0, 5) )
+        tb.Label(parent, text="网络设备:", font=(AppConfig.FONT_FAMILY, 10)).pack(
+            side=tk.LEFT, padx=(0, 5)
+        )
         self.network_var = tk.StringVar()
-        self.network_combo = tb.Combobox( parent, textvariable=self.network_var, state="readonly", width=12 )
+        self.network_combo = tb.Combobox(
+            parent, textvariable=self.network_var, state="readonly", width=12
+        )
         self.network_combo.pack(side=tk.LEFT, padx=(0, 10))
-        tb.Button( parent, text="刷新", command=self.load_network_connections, bootstyle=INFO ).pack(side=tk.LEFT, padx=(0, 15))
+        tb.Button(
+            parent, text="刷新", command=self.load_network_connections, bootstyle=INFO
+        ).pack(side=tk.LEFT, padx=(0, 15))
 
     def _create_category_controls(self, parent):
         """创建DNS类别控制组件"""
-        tb.Label(parent, text="DNS类别:", font=(AppConfig.FONT_FAMILY, 10)).pack( side=tk.LEFT, padx=(0, 10) )
+        tb.Label(parent, text="DNS类别:", font=(AppConfig.FONT_FAMILY, 10)).pack(
+            side=tk.LEFT, padx=(0, 10)
+        )
         self.category_var = tk.StringVar()
-        self.category_combo = tb.Combobox( parent, textvariable=self.category_var, state="readonly", width=15 )
+        self.category_combo = tb.Combobox(
+            parent, textvariable=self.category_var, state="readonly", width=15
+        )
         self.category_combo.pack(side=tk.LEFT, padx=(0, 10))
         self.category_combo.bind("<<ComboboxSelected>>", self.on_category_changed)
-        tb.Button( parent, text="管理分类", command=self.manage_categories, bootstyle=SECONDARY ).pack(side=tk.LEFT, padx=5)
+        tb.Button(
+            parent, text="管理分类", command=self.manage_categories, bootstyle=SECONDARY
+        ).pack(side=tk.LEFT, padx=5)
 
     def _create_theme_controls(self, parent):
         """创建主题控制组件"""
-        tb.Label(parent, text="主题:", font=(AppConfig.FONT_FAMILY, 10)).pack( side=tk.LEFT, padx=(15, 5) )
+        tb.Label(parent, text="主题:", font=(AppConfig.FONT_FAMILY, 10)).pack(
+            side=tk.LEFT, padx=(15, 5)
+        )
         self.theme_var = tk.StringVar()
-        self.theme_combo = tb.Combobox( parent, textvariable=self.theme_var, state="readonly", width=12 )
+        self.theme_combo = tb.Combobox(
+            parent, textvariable=self.theme_var, state="readonly", width=12
+        )
         self.theme_combo["values"] = AppConfig.THEMES
         self.theme_combo.set("Darkly")
         self.theme_combo.pack(side=tk.LEFT, padx=(0, 5))
@@ -155,7 +208,9 @@ class DNSTesterApp:
             button_frame.grid_columnconfigure(i, weight=1)
         # 创建按钮
         for i, (text, command, style) in enumerate(buttons):
-            tb.Button(button_frame, text=text, command=command, bootstyle=style).grid( row=0, column=i, padx=2, sticky="ew" )
+            tb.Button(button_frame, text=text, command=command, bootstyle=style).grid(
+                row=0, column=i, padx=2, sticky="ew"
+            )
 
     def _create_status_frame(self):
         """创建状态栏"""
@@ -163,7 +218,9 @@ class DNSTesterApp:
         status_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=5, pady=5)
         # 左侧状态信息
         self.status_var = tk.StringVar(value="就绪 - 管理员权限")
-        self.status_bar = tb.Label( status_frame, textvariable=self.status_var, bootstyle=SECONDARY )
+        self.status_bar = tb.Label(
+            status_frame, textvariable=self.status_var, bootstyle=SECONDARY
+        )
         self.status_bar.pack(side=tk.LEFT, padx=10, pady=5)
         # 右侧GitHub链接
         self._create_github_link(status_frame)
@@ -172,7 +229,9 @@ class DNSTesterApp:
         """创建GitHub链接"""
         github_frame = tb.Frame(parent)
         github_frame.pack(side=tk.RIGHT, padx=10, pady=5)
-        github_label = tb.Label( github_frame, text="⭐ GitHub", bootstyle="INFO", cursor="hand2" )
+        github_label = tb.Label(
+            github_frame, text="⭐ GitHub", bootstyle="INFO", cursor="hand2"
+        )
         github_label.pack(side=tk.RIGHT)
         github_label.bind("<Button-1>", self.open_github)
 
@@ -182,7 +241,9 @@ class DNSTesterApp:
         tree_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=(5, 0))
         # 创建Treeview
         columns = ("name", "primary", "secondary", "latency", "status")
-        self.tree = tb.Treeview( tree_frame, columns=columns, show="headings", bootstyle=INFO, height=30 )
+        self.tree = tb.Treeview(
+            tree_frame, columns=columns, show="headings", bootstyle=INFO, height=30
+        )
         self._setup_treeview_style()
         self._setup_treeview_columns()
         self._setup_treeview_scrollbar(tree_frame)
@@ -191,7 +252,12 @@ class DNSTesterApp:
     def _setup_treeview_style(self):
         """设置Treeview样式"""
         style = tb.Style()
-        style.configure( "Treeview", relief="solid", borderwidth=1, rowheight=30, )
+        style.configure(
+            "Treeview",
+            relief="solid",
+            borderwidth=1,
+            rowheight=30,
+        )
         style.configure("Treeview.Heading", relief="solid", borderwidth=1)
         self.tree.configure(style="Treeview")
 
@@ -239,10 +305,12 @@ class DNSTesterApp:
         """设置Windows标题栏主题"""
         try:
             import ctypes
+
             # 确保窗口已经完全创建
             self.root.update_idletasks()
             try:
                 import sys
+
                 # 使用GetParent获取正确的窗口句柄
                 hwnd = ctypes.windll.user32.GetParent(self.root.winfo_id())
                 # 如果GetParent返回0，使用原始窗口句柄
@@ -679,11 +747,13 @@ class DNSTesterApp:
                         secondary = ""
                         filtered_addresses.append(f"{key} 备用DNS(IPv6)")
                 if primary:  # 只添加有主DNS的服务器
-                    self.dns_servers.append({
-                        "name": key,
-                        "primary": primary,
-                        "secondary": secondary,
-                    })
+                    self.dns_servers.append(
+                        {
+                            "name": key,
+                            "primary": primary,
+                            "secondary": secondary,
+                        }
+                    )
             self.update_treeview()
             # 显示加载结果通知
             if filtered_addresses:
@@ -1225,11 +1295,13 @@ class DNSTesterApp:
                 self.current_category = selected_category
                 self.category_combo.set(selected_category)
                 self.load_category_dns(selected_category)
-            self.dns_servers.append({
-                "name": name,
-                "primary": primary,
-                "secondary": secondary,
-            })
+            self.dns_servers.append(
+                {
+                    "name": name,
+                    "primary": primary,
+                    "secondary": secondary,
+                }
+            )
             self.update_treeview()
             self.auto_save_current_category()  # 自动保存
             dns_dialog.destroy()
