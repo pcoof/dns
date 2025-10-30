@@ -1,3 +1,4 @@
+![image](SnowShot.png)
 # DNS服务器测试工具
 
 这是一个用于测试DNS服务器响应时间和可用性的现代化工具，采用ttkbootstrap现代化UI设计。
