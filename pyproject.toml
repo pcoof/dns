@@ -1,12 +1,42 @@
 [project]
-name = "dns"
-version = "0.1.0"
-description = "Add your description here"
+name = "dns-tester"
+version = "2.0.0"
+description = "现代化的DNS服务器测试工具，专为Windows系统设计"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
-    "dnspython>=2.7.0",
-    "pyinstaller>=6.14.2",
-    "pywin32>=311",
-    "ttkbootstrap>=1.14.0",
+    "dnspython==2.7.0",
+    "ttkbootstrap==1.14.0",
+    "pywin32==311",
 ]
+
+[project.optional-dependencies]
+build = [
+    "pyinstaller>=6.14.2",
+]
+
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=24.0.0",
+    "mypy>=1.8.0",
+    "ruff>=0.1.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py313']
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=. --cov-report=html"

@@ -17,6 +17,13 @@ Output/
 *.exe
 !icon.ico
 
+# Portable version
+DNS-Tester-Portable/
+DNS-Tester-Portable.zip
+
 # Build tools
 nsis-setup.exe
 innosetup.exe
+
+# Checksums and artifacts
+checksums.txt
