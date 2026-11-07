@@ -103,7 +103,7 @@ jobs:
         
         # 复制文件到便携版目录
         Copy-Item "dist\${{ env.APP_NAME }}.exe" "$portableDir\"
-        Copy-Item "dns_servers.ini" "$portableDir\"
+        Copy-Item "dns_config.ini" "$portableDir\"
         Copy-Item "README.md" "$portableDir\"
         Copy-Item "LICENSE" "$portableDir\"
         
