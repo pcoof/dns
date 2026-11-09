@@ -16,6 +16,9 @@ logger = get_logger("DNSTester")
 class TestResult:
     """DNS测试结果数据类"""
 
+    # 告诉 pytest 不要把这个业务数据类当作测试类收集
+    __test__ = False
+
     name: str
     primary_latency: float
     primary_status: str
@@ -100,7 +103,7 @@ class DNSTester:
             resolver.lifetime = self.timeout
 
             start_time = time.time()
-            answers = resolver.resolve(domain)
+            resolver.resolve(domain)
             end_time = time.time()
 
             latency = (end_time - start_time) * 1000

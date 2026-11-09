@@ -2,6 +2,8 @@
 
 from typing import List, Dict
 
+from .paths import data_path, resource_path
+
 
 class AppConfig:
     """应用程序配置类"""
@@ -11,10 +13,13 @@ class AppConfig:
     WINDOW_SIZE: tuple = (980, 500)
     FONT_FAMILY: str = "Microsoft YaHei"
 
-    # 文件配置
-    CONFIG_FILE: str = "dns_config.ini"
-    HISTORY_FILE: str = "dns_history.json"
-    LOG_FILE: str = "dns_tester.log"
+    # 文件配置（可写数据统一放在 exe / 项目根目录下，与启动时的工作目录无关）
+    CONFIG_FILE: str = str(data_path("dns_config.ini"))
+    HISTORY_FILE: str = str(data_path("dns_history.json"))
+    LOG_FILE: str = str(data_path("dns_tester.log"))
+
+    # 静态资源（随程序分发，打包后位于 _MEIPASS）
+    ICON_FILE: str = str(resource_path("assets/icon.ico"))
 
     # 主题配置
     THEMES: List[str] = [

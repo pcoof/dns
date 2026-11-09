@@ -3,7 +3,7 @@
 import pythoncom
 import win32com.client
 from contextlib import contextmanager
-from typing import Optional, Generator, Any
+from typing import Generator, Any
 
 
 @contextmanager

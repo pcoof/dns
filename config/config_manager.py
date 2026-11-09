@@ -1,11 +1,10 @@
 """配置文件管理模块"""
 
 import configparser
-import os
 from pathlib import Path
-from typing import List, Dict, Optional, Any
+from typing import List, Optional
 from .settings import AppConfig
-from .models import DNSServer, Category
+from .models import DNSServer
 from utils.logger import get_logger
 
 logger = get_logger("ConfigManager")

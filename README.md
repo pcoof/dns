@@ -1,4 +1,3 @@
-![image](SnowShot.png)
 # DNS服务器测试工具
 
 这是一个用于测试DNS服务器响应时间和可用性的现代化工具，采用ttkbootstrap现代化UI设计。
@@ -129,18 +128,51 @@
 
 ## 系统要求
 
-- Windows 10/11
-- Python 3.13+
+- Windows 10/11（64 位）
+- Python 3.13+（仅源码运行需要）
 - 管理员权限（程序运行必需）
 
-## 安装依赖
+## 快速开始
 
 ```bash
-pip install dnspython ttkbootstrap
+# 安装依赖（使用 uv，项目锁定 uv.lock）
+uv sync
+
+# 启动（需以管理员身份运行）
+uv run python main.py
+
+# 单元测试与静态检查
+uv run pytest -q
+uv run ruff check .
 ```
 
-## 运行应用
+## 项目结构
+
+```
+main.py              入口：权限检查 → 创建窗口 → 主循环
+config/              settings.py（常量）、paths.py（路径解析）、models.py、config_manager.py
+core/                dns_tester.py（并行测试）、network_manager.py（WMI）、dns_config_handler.py
+ui/                  main_window.py（主界面）、dialogs.py（对话框）
+utils/               helpers / logger / wmi_context / history_manager / export_manager / proxy_detector
+assets/              icon.ico（程序图标）、portable_readme.txt（便携版说明）
+packaging/           installer.iss（Inno Setup 安装脚本）
+docs/                构建说明、优化记录、发布模板
+tests/               pytest 单元测试（mock，不依赖真实网络）
+```
+
+运行时数据（`dns_config.ini`、`dns_history.json`、`dns_tester.log`）统一落在程序所在目录，
+与启动时的工作目录无关。
+
+## 下载与构建
+
+二进制产物由 GitHub Actions 自动构建（`.github/workflows/build.yml`）：
+
+- 推送到 `main`：仅产出构建产物（artifact）
+- 推送 `v*` 标签：额外创建 Release，附带 `DNS-Tester-Portable.zip` 与 `DNS-Tester-Setup.exe`
+
+发布新版本：
 
 ```bash
-python main.py
+git tag v2.0.1
+git push origin v2.0.1
 ```

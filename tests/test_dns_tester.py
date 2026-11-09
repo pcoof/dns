@@ -1,6 +1,5 @@
 """DNS测试器测试模块"""
 
-import pytest
 from unittest.mock import patch, MagicMock
 from core.dns_tester import DNSTester, TestResult
 

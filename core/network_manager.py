@@ -3,7 +3,7 @@
 import platform
 import socket
 import subprocess
-from typing import List, Dict, Optional, Tuple
+from typing import List
 from dataclasses import dataclass
 
 from utils.wmi_context import wmi_context, wmi_dispatch_context
@@ -351,16 +351,16 @@ class NetworkManager:
                     return_value_prop = result.Properties_("ReturnValue")
                     if return_value_prop:
                         return return_value_prop.Value
-                except:
+                except Exception:
                     try:
                         for prop in result.Properties_:
                             if prop.Name == "ReturnValue":
                                 return prop.Value
-                    except:
+                    except Exception:
                         pass
             try:
                 return int(result)
-            except:
+            except (TypeError, ValueError):
                 pass
         except Exception:
             pass

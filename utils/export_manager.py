@@ -7,7 +7,6 @@ from typing import List, Dict, Optional
 from datetime import datetime
 
 from config.models import DNSServer
-from config.settings import AppConfig
 from utils.logger import get_logger
 
 logger = get_logger("ExportManager")

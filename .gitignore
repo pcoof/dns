@@ -15,7 +15,7 @@ wheels/
 # Installer outputs
 Output/
 *.exe
-!icon.ico
+!assets/icon.ico
 
 # Portable version
 DNS-Tester-Portable/
@@ -27,3 +27,8 @@ innosetup.exe
 
 # Checksums and artifacts
 checksums.txt
+
+# 运行时产物（程序首次运行时自动生成，不入库）
+dns_tester.log
+dns_history.json
+dns_config.ini.bak

@@ -7,7 +7,7 @@ import urllib.request
 import webbrowser
 import ttkbootstrap as tb
 from ttkbootstrap.constants import PRIMARY, SECONDARY, SUCCESS, DANGER, WARNING, INFO
-from typing import List, Dict, Optional, Callable
+from typing import List, Dict, Callable
 
 from config.settings import AppConfig
 from config.config_manager import ConfigManager
@@ -18,9 +18,6 @@ from core.dns_config_handler import DNSConfigHandler
 from ui.dialogs import DialogManager
 from utils.helpers import (
     center_window,
-    is_admin,
-    run_as_admin,
-    is_ip,
     get_notification_style,
 )
 from utils.logger import get_logger

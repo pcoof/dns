@@ -68,7 +68,7 @@ def main():
         root.title(f"{AppConfig.WINDOW_TITLE}（管理员权限）")
 
         # 设置图标
-        icon_path = os.path.join(os.path.dirname(__file__), "icon.ico")
+        icon_path = AppConfig.ICON_FILE
         if os.path.exists(icon_path):
             try:
                 root.iconbitmap(icon_path)

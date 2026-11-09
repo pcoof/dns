@@ -4,8 +4,8 @@ import sys
 import tkinter as tk
 from tkinter import messagebox
 import ttkbootstrap as tb
-from ttkbootstrap.constants import SUCCESS, DANGER, INFO, WARNING, SECONDARY
-from typing import List, Optional, Callable, Tuple
+from ttkbootstrap.constants import SUCCESS, DANGER, INFO, SECONDARY
+from typing import List, Callable
 
 from config.settings import AppConfig
 from utils.helpers import sanitize_input

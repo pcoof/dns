@@ -1,6 +1,5 @@
 """辅助函数测试模块"""
 
-import pytest
 from utils.helpers import (
     validate_dns_ip,
     sanitize_input,

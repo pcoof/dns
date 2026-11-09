@@ -3,10 +3,8 @@
 import pytest
 import os
 import tempfile
-from pathlib import Path
 
-from config.config_manager import ConfigManager, DNSServer, Category
-from config.settings import AppConfig
+from config.config_manager import ConfigManager, DNSServer
 
 
 class TestDNSServer:

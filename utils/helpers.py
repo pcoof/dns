@@ -144,8 +144,7 @@ def sanitize_input(text: str) -> str:
     """
     if not text or not isinstance(text, str):
         return ""
-    # Remove HTML tags and special characters
-    text = re.sub(r"<[^>]+>", "", text)
+    # 只剥离危险字符，保留文本内容（不整体删除标签，避免吞掉用户输入）
     text = re.sub(r'[<>"\'&]', "", text)
     return text.strip()
 

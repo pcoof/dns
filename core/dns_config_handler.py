@@ -1,10 +1,9 @@
 """DNS配置处理器 - 处理DNS配置的业务逻辑"""
 
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 from config.config_manager import ConfigManager
-from config.models import DNSServer, Category
-from config.settings import AppConfig
+from config.models import DNSServer
 from utils.logger import get_logger
 
 logger = get_logger("DNSConfigHandler")
@@ -158,7 +157,7 @@ class DNSConfigHandler:
             self.config_manager.load_config()
             success = self.config_manager.set_category_order(categories)
             if success:
-                logger.info(f"成功更新分类顺序")
+                logger.info("成功更新分类顺序")
             return success
         except Exception as e:
             logger.error(f"更新分类顺序失败: {e}")
