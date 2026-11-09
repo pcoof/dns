@@ -1,178 +1,112 @@
-# DNS服务器测试工具
+<div align="center">
+  <img src="assets/logo.png" width="112" alt="DNS Tester logo" />
 
-这是一个用于测试DNS服务器响应时间和可用性的现代化工具，采用ttkbootstrap现代化UI设计。
+  <h1>DNS Tester</h1>
 
-## 新功能特性
+  <p>Windows 平台的 DNS 服务器测速与一键切换工具</p>
 
-### 🎨 现代化界面
-- 使用ttkbootstrap提供现代化的UI风格
-- 支持多种主题（cosmo, flatly, litera等）
-- 更好的视觉体验和用户交互
+  <p>
+    <a href="https://github.com/pcoof/dns/releases/latest"><img src="https://img.shields.io/github/v/release/pcoof/dns?label=release&color=4c8eda" alt="Release" /></a>
+    <a href="https://github.com/pcoof/dns/releases"><img src="https://img.shields.io/github/downloads/pcoof/dns/total?color=success" alt="Downloads" /></a>
+    <img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6" alt="Platform" />
+    <img src="https://img.shields.io/badge/python-3.13-3776AB" alt="Python" />
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License" /></a>
+  </p>
+</div>
 
-### 🌐 网络设备管理
-- 顶部新增网络设备选择下拉框
-- 自动检测系统中的网络适配器
-- 支持刷新网络设备列表
-- 直接选择要配置DNS的网络接口
+![DNS Tester 主界面](assets/screenshot.png)
 
-### 📊 增强的延迟显示
-- 延迟列现在显示格式：`主DNS延迟 | 备用DNS延迟`
-- 更直观地查看主备DNS的性能对比
-- 支持无限大延迟(∞)和未测试(-)状态显示
+## 简介
 
-### 📂 DNS类别管理
-- 新增DNS类别下拉框，支持多种DNS服务器分类
-- 内置类别：`Ipv4_默认`、`Ipv4_家庭`、`Ipv4_资源`
-- 可在不同类别间快速切换，满足不同使用场景
-- 支持刷新类别列表功能
+DNS Tester 面向需要经常换 DNS 的 Windows 用户：内置公共 DNS、各省运营商 DNS、境外地区和安全 DNS 分类列表，一键并发测速，把响应最快的那台直接写进系统。
 
-### 🔧 改进的功能
-- 更好的错误处理和编码支持
-- 优化的网络连接检测算法
-- 现代化的对话框设计
-- 增强的状态栏信息显示
+所有网络操作走 WMI COM，操作过程不会弹出命令行黑窗，也不需要你记住 `netsh` 的参数。
 
-### 🆕 最新更新
-- **新增"默认DNS"按钮**：一键恢复DNS为DHCP自动获取
-- **界面优化**：主要操作按钮采用grid布局，实现平均分布
-- **字体统一**：全局使用Microsoft YaHei字体，提供更好的中文显示效果
-- **按钮布局**：添加DNS → 删除选中 → 开始测试 → 清理DNS缓存 → 默认DNS
+## 功能
 
-### 🔧 列表视图优化
-- **行高增加**：设置为45像素，提供更好的可读性
-- **双击设置DNS**：双击任意DNS服务器行可直接设置为系统DNS（包括主DNS和备用DNS）
-- **颜色对比度优化**：
-  - 表头：深灰色背景 + 白色粗体字
-  - 交替行：浅灰色(#f1f3f4) 和 白色(#ffffff) 背景
-  - 选中行：蓝色背景(#007bff) + 白色字体
-  - 状态显示：成功为绿色粗体，失败为红色粗体
+- **并发测速** — 多线程同时测试，主/备 DNS 延迟分开显示（如 `0.9 | 1.2`），结果按速度自动排序
+- **一键切换** — 双击任意条目即写入系统 DNS；「默认 DNS」恢复到 DHCP 自动获取
+- **分类管理** — 公共 IPv4/IPv6、国内电信/联通/移动、境外地区、小众宽带等分类，可增删改
+- **网卡识别** — 自动枚举网络适配器，切换 DNS 前可指定目标网卡
+- **分类排序** — 分类顺序与上次选择会被记住，下次启动直接回到原位置
+- **历史记录** — 保留最近 1000 条测试结果，便于对比不同时间的表现
+- **多主题** — 17 种 ttkbootstrap 主题，深色浅色自由切换，偏好自动保存
+- **状态总览** — 顶部实时显示当前 IP、默认网关、主备 DNS 与 IPv6 支持情况
 
-### 🛠️ 最新修复
-- **底部控件固定**：状态栏固定在底部，列表数据多时仍可见
-- **状态颜色修复**：重新组织标签配置，确保状态颜色正确显示
-- **DNS设置优化**：
-  - 改进错误处理和详细日志输出
-  - 更好的管理员权限处理
-  - 确保主DNS和备用DNS同时设置
-  - 用户友好的错误提示和状态反馈
+## 下载
 
-### 🎯 最终优化
-- **静默执行**：管理员权限操作不再弹出命令窗口
-- **GitHub链接**：底部右下角添加GitHub图标链接
-- **默认DNS修复**：修复默认DNS按钮功能，确保正常工作
-- **界面完善**：状态栏左右布局，信息显示更清晰
+前往 [Releases](https://github.com/pcoof/dns/releases/latest) 下载最新版本：
 
-### 🔧 WMI COM服务实现
-- **完全替代命令行**：所有网络操作使用WMI COM服务，不再依赖subprocess
-- **技术栈升级**：
-  - 使用`win32com.client`和`pythoncom`
-  - 查询`Win32_NetworkAdapterConfiguration`类
-  - 调用`SetDNSServerSearchOrder()`方法
-- **功能覆盖**：
-  - 网络信息获取（IP、网关、DNS）
-  - 网络适配器列表
-  - DNS服务器设置
-  - DNS缓存清理
-  - DHCP恢复
-- **用户体验提升**：
-  - 完全消除命令行窗口弹出
-  - 更快的执行速度
-  - 更好的错误处理
-  - 更稳定的编码支持
+| 版本 | 文件 | 适用场景 |
+|------|------|----------|
+| 便携版 | `DNS-Tester-Portable.zip` | 解压即用，含预置 DNS 列表，可放 U 盘 |
+| 安装版 | `DNS-Tester-Setup.exe` | 含开始菜单与桌面快捷方式，支持标准卸载 |
 
-### 🔐 管理员权限管理
-- **强制管理员权限**：
-  - 程序启动时自动检查权限状态
-  - 如果没有管理员权限，自动尝试以管理员权限重启
-  - 如果无法获取管理员权限，显示错误提示并退出程序
-- **权限验证**：
-  - 使用`ctypes.windll.shell32.IsUserAnAdmin()`检查权限
-  - 支持.py和.exe两种文件格式的权限提升
-- **权限状态显示**：
-  - 窗口标题显示"（管理员权限）"
-  - 状态栏显示"就绪 - 管理员权限"
-  - 确保所有DNS设置功能正常工作
+两个版本都无需安装 Python 或任何运行时。下载后可用 Release 附带的 `checksums.txt` 校验 SHA256。
 
-### 🔧 界面和显示修复
-- **窗口居中**：应用程序启动时自动在屏幕中央显示
-- **DNS显示更新**：修复默认DNS操作后顶部Label控件不更新的问题
-- **实时刷新**：所有DNS设置操作都会自动刷新顶部的主DNS和备用DNS显示
-- **异步更新**：使用后台线程刷新，不阻塞用户界面
-- **图标修复**：修复应用程序图标加载错误，添加图标文件和异常处理
-- **主题选择器**：添加主题切换下拉框，支持21种ttkbootstrap主题，自动保存偏好
-- **行高修复**：修复主题切换后列表视图行高变小的问题，保持45像素行高
-- **WMI实现**：全面使用WMI COM服务替代命令行操作，消除命令行窗口弹出
-- **强制管理员权限**：程序启动时自动要求管理员权限，确保所有功能正常运行
+## 使用
 
-## 使用方法
+1. 启动程序（会自动请求管理员权限）
+2. 顶部选择要配置的网络设备
+3. 左侧选择 DNS 分类，点击 **开始测试** 并发测速
+4. 双击结果中理想的一行，即可设为系统 DNS
+5. 想还原时点击 **默认 DNS**，恢复为 DHCP 自动获取
 
-1. 启动应用程序
-2. 在顶部选择要配置的网络设备
-3. 选择DNS类别（默认、家庭、资源等）
-4. 查看当前类别下的DNS服务器列表
-5. 点击"开始测试"测试所有DNS服务器
-6. 右键点击DNS服务器可设置为系统DNS
-7. 可以在不同类别间切换以使用不同的DNS服务器组
-8. **新功能**：点击"默认DNS"按钮可将当前网络适配器的DNS恢复为DHCP自动获取
-9. **双击设置**：双击DNS服务器列表中的任意行可直接设置为系统DNS
-10. **GitHub链接**：点击底部右下角的GitHub图标可访问项目页面
-11. **主题切换**：在管理分类右边的主题下拉框中选择不同的界面主题
+> 为了修改系统 DNS，程序**必须**以管理员身份运行，启动时会自动提权。这是 Windows 的限制，不是程序缺陷。
 
-## 主要按钮功能
-
-- **添加DNS**：添加新的DNS服务器到当前类别
-- **删除选中**：删除选中的DNS服务器条目
-- **开始测试**：测试所有DNS服务器的响应时间
-- **清理DNS缓存**：清除系统DNS缓存
-- **默认DNS**：恢复当前网络适配器的DNS为DHCP自动获取
-
-## 系统要求
-
-- Windows 10/11（64 位）
-- Python 3.13+（仅源码运行需要）
-- 管理员权限（程序运行必需）
-
-## 快速开始
+## 从源码运行
 
 ```bash
-# 安装依赖（使用 uv，项目锁定 uv.lock）
+# 依赖由 uv 管理（锁定 uv.lock）
 uv sync
 
-# 启动（需以管理员身份运行）
+# 需要管理员终端
 uv run python main.py
+```
 
-# 单元测试与静态检查
-uv run pytest -q
-uv run ruff check .
+开发与检查：
+
+```bash
+uv sync --extra dev
+uv run pytest -q          # 单元测试（全部基于 mock，不触网）
+ruff check .              # 静态检查
 ```
 
 ## 项目结构
 
 ```
 main.py              入口：权限检查 → 创建窗口 → 主循环
-config/              settings.py（常量）、paths.py（路径解析）、models.py、config_manager.py
-core/                dns_tester.py（并行测试）、network_manager.py（WMI）、dns_config_handler.py
-ui/                  main_window.py（主界面）、dialogs.py（对话框）
-utils/               helpers / logger / wmi_context / history_manager / export_manager / proxy_detector
-assets/              icon.ico（程序图标）、portable_readme.txt（便携版说明）
-packaging/           installer.iss（Inno Setup 安装脚本）
+config/              常量、路径解析、数据模型、INI 读写
+core/                并行测试、WMI 网络操作、配置业务逻辑
+ui/                  主界面与对话框
+utils/               日志、历史、代理检测、WMI 上下文、导出
+assets/              图标、界面截图、便携版说明
+packaging/           Inno Setup 安装脚本
 docs/                构建说明、优化记录、发布模板
-tests/               pytest 单元测试（mock，不依赖真实网络）
+tests/               pytest 单元测试
 ```
 
-运行时数据（`dns_config.ini`、`dns_history.json`、`dns_tester.log`）统一落在程序所在目录，
-与启动时的工作目录无关。
+配置、历史与日志统一保存在**程序所在目录**（`dns_config.ini` / `dns_history.json` / `dns_tester.log`），与启动时的工作目录无关。
 
-## 下载与构建
+## 构建与发布
 
-二进制产物由 GitHub Actions 自动构建（`.github/workflows/build.yml`）：
+构建全部在 GitHub Actions 完成（`.github/workflows/build.yml`）：
 
-- 推送到 `main`：仅产出构建产物（artifact）
-- 推送 `v*` 标签：额外创建 Release，附带 `DNS-Tester-Portable.zip` 与 `DNS-Tester-Setup.exe`
-
-发布新版本：
+- 推送 `main`：跑 ruff + pytest，并产出构建产物（artifact）
+- 推送 `v*` 标签：额外创建 Release，附便携版与安装包
 
 ```bash
+# 发布新版本
 git tag v2.0.1
 git push origin v2.0.1
 ```
+
+版本号优先取 tag 名，其次取 `pyproject.toml` 的 `version`，两者建议保持一致。
+
+## 许可
+
+[MIT](LICENSE)
+
+---
+
+问题反馈请提 [Issue](https://github.com/pcoof/dns/issues)。
